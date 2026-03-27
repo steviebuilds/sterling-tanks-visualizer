@@ -19,6 +19,8 @@ Mobile-first React + Three.js visualizer for Sterling septic process flow and co
 - RL references are mostly from `memory/sterling-septic-job/images/2026-03-26/sterling-div-layout-v3.png` and `memory/sterling-septic-job/docs/*`.
 - Not all RL values are explicitly documented in text. Values shown in the UI are treated as approximate where required.
 - Approximation note: optional **Holding / Distribution** RL entries are placeholders until final plan confirmation.
+- Scene annotations were moved onto shared empty space for readability, and OrbitControls pan is enabled so the full flow can be scrubbed around without crowding labels.
+- Technical IDs remain available in tooltips/secondary lines; labels default to operator-readable text first.
 
 ## Local
 

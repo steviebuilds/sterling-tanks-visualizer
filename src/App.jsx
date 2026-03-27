@@ -10,7 +10,7 @@ const STAGE_SEQUENCE = [
     name: 'Trash Tank',
     alias: 'Pre-treatment',
     summary: 'Gravity inlet hold and gravity pass-through',
-    position: [-14, 0, 0],
+    position: [-18, 0, -2.6],
     radius: 1.9,
     height: 2.2,
     bodyColor: '#4f46e5',
@@ -27,17 +27,17 @@ const STAGE_SEQUENCE = [
       outlet: 243.3,
     },
     io: [
-      { label: 'Influent inlet', alias: 'Inlet / building drain' },
-      { label: 'Outlet', alias: 'Gravity transfer to Dosing / Equalization' },
+      { label: 'Influent inlet', alias: 'Building drain / gravity feed' },
+      { label: 'Outlet', alias: 'Gravity transfer to Dosing + Equalization' },
     ],
     floatPorts: [],
   },
   {
     id: 'dosing',
-    name: 'Dosing / Equalization',
+    name: 'Dosing and equalization',
     alias: 'Pump-on and dose conditioning',
     summary: 'Collects transfer from trash tank and conditions dosage',
-    position: [-3, 0, 0],
+    position: [-4, 0, 2.2],
     radius: 2.05,
     height: 2.35,
     bodyColor: '#f59e0b',
@@ -45,7 +45,7 @@ const STAGE_SEQUENCE = [
     rlTop: 243,
     rlBottom: 239.1,
     rlBands: [
-      { rl: 243, label: 'Post tank RL (~243)' },
+      { rl: 243, label: 'Post tank RL' },
       { rl: 241.5, label: 'Pump-on float band' },
       { rl: 239.1, label: 'Bottom' },
     ],
@@ -56,21 +56,21 @@ const STAGE_SEQUENCE = [
     io: [
       { label: 'Influent', alias: 'From Trash Tank gravity port' },
       { label: 'Effluent', alias: 'To ATU / Aeration' },
-      { label: 'Dose pumps', alias: 'PSZ-201 / PSZ-202' },
-      { label: 'Flow pulse', alias: 'FTQ-03' },
+      { label: 'Dose pumps', alias: 'Pump pair PSZ-201 to PSZ-202' },
+      { label: 'Flow pulse', alias: 'Flow pulse FTQ-03' },
     ],
     floatPorts: [
-      { key: 'lls', label: 'LLS-02', alias: 'Pump-on float', rl: 241.2 },
-      { key: 'als', label: 'ALS-02', alias: 'Alarm level switch', rl: 242.1 },
-      { key: 'hls', label: 'HLS-02', alias: 'High level float', rl: 242.9 },
+      { key: 'lls', label: 'Pump-on float', tech: 'LLS-02', alias: 'pump-on float', rl: 241.2 },
+      { key: 'als', label: 'Alarm float', tech: 'ALS-02', alias: 'alarm level switch', rl: 242.1 },
+      { key: 'hls', label: 'High float', tech: 'HLS-02', alias: 'high level float', rl: 242.9 },
     ],
   },
   {
     id: 'atu',
-    name: 'ATU / Aeration',
+    name: 'Biological aeration',
     alias: 'Aeration and biological treatment',
     summary: 'Treatment train with blower set + pressure check',
-    position: [8, 0, 0],
+    position: [10, 0, -2.8],
     radius: 2.0,
     height: 2.25,
     bodyColor: '#8b5cf6',
@@ -78,8 +78,8 @@ const STAGE_SEQUENCE = [
     rlTop: 242,
     rlBottom: 239.2,
     rlBands: [
-      { rl: 242, label: 'Post dose RL (~242)' },
-      { rl: 240.4, label: 'Aeration level band' },
+      { rl: 242, label: 'Post dose RL' },
+      { rl: 240.4, label: 'Aeration band' },
       { rl: 239.2, label: 'Bottom' },
     ],
     ports: {
@@ -87,19 +87,19 @@ const STAGE_SEQUENCE = [
       outlet: 241,
     },
     io: [
-      { label: 'Influent', alias: 'From Dosing / Equalization' },
-      { label: 'Effluent', alias: 'To Pump + Chlorination' },
-      { label: 'Blowers', alias: 'BSZ-205..212' },
-      { label: 'Pressure switches', alias: 'PS-06..13' },
+      { label: 'Influent', alias: 'From Dosing + equalization' },
+      { label: 'Effluent', alias: 'To pump + chlorination' },
+      { label: 'Blowers', alias: 'Blowers BSZ-205 to BSZ-212' },
+      { label: 'Pressure switches', alias: 'PS-06 to PS-13' },
     ],
     floatPorts: [],
   },
   {
     id: 'pump',
-    name: 'Pump + Chlorination',
+    name: 'Pump and chlorination',
     alias: 'Final tank and discharge booster',
     summary: 'Checks pump and clear-down conditions before discharge',
-    position: [20.5, 0, 0],
+    position: [24, 0, 2.1],
     radius: 2.05,
     height: 2.3,
     bodyColor: '#10b981',
@@ -107,32 +107,32 @@ const STAGE_SEQUENCE = [
     rlTop: 241,
     rlBottom: 239,
     rlBands: [
-      { rl: 241, label: 'Pump tank top (~241)' },
+      { rl: 241, label: 'Pump tank top' },
       { rl: 240.1, label: 'Pump-on float band' },
-      { rl: 239, label: 'Bottom (~239)' },
+      { rl: 239, label: 'Bottom' },
     ],
     ports: {
       inlet: 240.5,
       outlet: 239.3,
     },
     io: [
-      { label: 'Influent', alias: 'From ATU / Aeration' },
+      { label: 'Influent', alias: 'From biological aeration' },
       { label: 'Discharge', alias: 'Pump discharge to disposal field' },
-      { label: 'Pump pair', alias: 'PSZ-203 / PSZ-204' },
-      { label: 'Return pulse', alias: 'FTQ-05' },
+      { label: 'Pump pair', alias: 'PSZ-203 and PSZ-204' },
+      { label: 'Return pulse', alias: 'Flow mismatch FTQ-05' },
     ],
     floatPorts: [
-      { key: 'lls', label: 'LLS-01', alias: 'Pump-on float', rl: 239.4 },
-      { key: 'als', label: 'ALS-01', alias: 'Alarm level switch', rl: 240.1 },
-      { key: 'hls', label: 'HLS-01', alias: 'High level float', rl: 240.8 },
+      { key: 'lls', label: 'Pump-on float', tech: 'LLS-01', alias: 'pump-on float', rl: 239.4 },
+      { key: 'als', label: 'Alarm float', tech: 'ALS-01', alias: 'alarm level switch', rl: 240.1 },
+      { key: 'hls', label: 'High float', tech: 'HLS-01', alias: 'high level float', rl: 240.8 },
     ],
   },
   {
     id: 'hold',
-    name: 'Holding / Distribution',
+    name: 'Holding and distribution',
     alias: 'Optional terminal vessel',
     summary: 'Optional terminal holding/distribution stage (not core yet)',
-    position: [31, 0.1, -0.4],
+    position: [38, 0.1, -1.4],
     radius: 1.5,
     height: 1.8,
     bodyColor: '#64748b',
@@ -148,8 +148,8 @@ const STAGE_SEQUENCE = [
       outlet: 239.2,
     },
     io: [
-      { label: 'Optional inlet', alias: 'From Pump + Chlorination' },
-      { label: 'Optional outlet', alias: 'Distribution branch / field loop' },
+      { label: 'Optional inlet', alias: 'From pump + chlorination' },
+      { label: 'Optional outlet', alias: 'Distribution branch or field loop' },
     ],
     floatPorts: [],
   },
@@ -163,7 +163,7 @@ const SCENARIOS = [
     tankStates: {
       trash: {
         level: 0.52,
-        mode: 'pass-through',
+        mode: 'Pass-through',
         actor: ['Flow', 'Ready'],
       },
       dosing: {
@@ -202,7 +202,7 @@ const SCENARIOS = [
     tankStates: {
       trash: {
         level: 0.26,
-        mode: 'pass-through only',
+        mode: 'Pass-through only',
         actor: ['Flow', 'Low'],
       },
       dosing: {
@@ -237,7 +237,7 @@ const SCENARIOS = [
   {
     id: 'high',
     label: 'High level / Forced clear-down',
-    description: 'High float active. Clear-down logic takes precedence over normal dosing/pumping.',
+    description: 'High float active. Clear-down logic takes precedence over normal dosing and pumping.',
     tankStates: {
       trash: {
         level: 0.74,
@@ -300,9 +300,13 @@ function getPortPosition(stage, key) {
   return new THREE.Vector3(stage.position[0], rlToY(stage.ports[key], stage), stage.position[2])
 }
 
-function TankNode({ stage, state }) {
+function TankNode({ stage, state, orderIndex = 0 }) {
   const fill = clamp(state?.level ?? 0.35, 0.02, 0.98)
   const floatState = state?.floats || null
+  const isEven = orderIndex % 2 === 0
+  const tankLabelOffset = isEven
+    ? [stage.radius * -1.35, stage.height * 0.67, 2.45]
+    : [stage.radius * 1.35, stage.height * 0.67, -2.45]
 
   return (
     <group position={stage.position}>
@@ -328,8 +332,16 @@ function TankNode({ stage, state }) {
         />
       </mesh>
 
-      {stage.rlBands.map((band) => {
+      {stage.rlBands.map((band, bandIndex) => {
         const y = rlToY(band.rl, stage)
+        const spreadOffsetY = bandIndex * 0.14 - (stage.rlBands.length - 1) * 0.07
+        const xSide = isEven ? 1 : -1
+        const badgeOffset = [
+          xSide * (stage.radius * 1.55 + bandIndex * 0.26),
+          y + spreadOffsetY + 0.08,
+          xSide * (stage.radius * 0.3 + 0.05),
+        ]
+
         return (
           <group key={`${stage.id}-${band.rl}`}>
             <mesh position={[0, y, 0]}>
@@ -340,9 +352,12 @@ function TankNode({ stage, state }) {
                 opacity={band.label.includes('Top') ? 0.85 : 0.55}
               />
             </mesh>
-            <Html position={[stage.radius * 1.28, y + 0.08, 0]} center>
-              <div className="rl-badge" title={`Reference level from source docs${stage.id !== 'hold' ? ' (approx where not explicit)' : ''}`}>
-                +RL {band.rl.toFixed(1)}
+            <Html position={badgeOffset} center>
+              <div
+                className="rl-badge"
+                title={`${band.label} for ${stage.name}${stage.id !== 'hold' ? ' (approx where not explicit)' : ''}`}
+              >
+                <span>RL {band.rl.toFixed(1)}</span>
                 <span className="muted">{band.label}</span>
               </div>
             </Html>
@@ -350,11 +365,18 @@ function TankNode({ stage, state }) {
         )
       })}
 
-      {stage.floatPorts.map((floatPoint) => {
+      {stage.floatPorts.map((floatPoint, idx) => {
         const value = floatState ? floatState[floatPoint.key] : false
         const y = rlToY(floatPoint.rl, stage)
+        const side = idx % 2 === 0 ? 1 : -1
+        const floatOffset = [
+          stage.radius * (1.5 + idx * 0.12),
+          y + 0.02,
+          side * (stage.radius * 0.8 + 0.28 + idx * 0.16),
+        ]
+
         return (
-          <group key={floatPoint.key} position={[0, y, -stage.radius * 0.58]}>
+          <group key={floatPoint.key} position={floatOffset}>
             <mesh>
               <sphereGeometry args={[0.11, 12, 12]} />
               <meshStandardMaterial
@@ -362,9 +384,11 @@ function TankNode({ stage, state }) {
                 emissive={value ? '#052e16' : '#1f2937'}
               />
             </mesh>
-            <Html center distanceFactor={16} position={[-0.03, -0.22, stage.radius * 0.35]}>
+            <Html center distanceFactor={18} position={[-0.02, -0.24, 0]}>
               <span className={value ? 'float-chip on' : 'float-chip off'} title={floatPoint.alias}>
-                {floatPoint.label}: {value ? 'ON' : 'OFF'}
+                <span className="chip-title">{floatPoint.label}</span>
+                <span>{value ? 'ON' : 'OFF'}</span>
+                <span className="muted">{floatPoint.tech}</span>
               </span>
             </Html>
           </group>
@@ -372,29 +396,44 @@ function TankNode({ stage, state }) {
       })}
 
       {(state?.actuators || []).map((actuator, idx) => {
-        const y = stage.height / 2 + 0.36 + idx * 0.28
+        const y = stage.height / 2 + 0.56 + (idx % 3) * 0.34
+        const offsets = [
+          [stage.radius * 1.24, y, stage.radius * 0.65],
+          [-(stage.radius * 1.24), y, -(stage.radius * 0.9)],
+          [stage.radius * 0.4, y + 0.2, stage.radius * 1.3],
+        ]
+        const [ox, oy, oz] = offsets[idx] ?? [stage.radius * 1.05, y, 0]
+
         return (
-          <group key={`${stage.id}-act-${idx}`} position={[stage.radius * 0.22, y, stage.radius * 0.42]}>
+          <group key={`${stage.id}-act-${idx}`} position={[ox, oy, oz]}>
             <mesh>
               <sphereGeometry args={[0.08, 10, 10]} />
               <meshStandardMaterial
-                color={actuator.state.includes('RUNNING') ? '#34d399' : actuator.state.includes('IDLE') ? '#64748b' : '#f97316'}
+                color={
+                  actuator.state.includes('RUNNING')
+                    ? '#34d399'
+                    : actuator.state.includes('IDLE')
+                      ? '#64748b'
+                      : '#f97316'
+                }
               />
             </mesh>
-            <Html center distanceFactor={18} position={[0, 0.12, stage.radius * 0.28]}>
+            <Html center distanceFactor={18} position={[0, 0.16, 0]}>
               <span
                 className={`actuator-chip ${actuator.state.includes('RUNNING') ? 'on' : actuator.state.includes('IDLE') ? 'idle' : 'force'}`}
                 title={actuator.tech}
               >
-                {actuator.name}: {actuator.state}
-                {actuator.reason ? ` (${actuator.reason})` : ''}
+                <span className="chip-title">{actuator.name}</span>
+                <span>{actuator.state}</span>
+                {actuator.reason ? <span className="muted">{actuator.reason}</span> : null}
+                <span className="muted">{actuator.tech}</span>
               </span>
             </Html>
           </group>
         )
       })}
 
-      <Html center distanceFactor={14} position={[0, stage.height * 0.65, 0]}>
+      <Html center distanceFactor={14} position={tankLabelOffset}>
         <div className="tank-label">
           <div className="tank-title">{stage.name}</div>
           <div>{stage.alias}</div>
@@ -465,18 +504,18 @@ function StageScene({ showOptional, selectedScenario }) {
 
   const entryStage = stageMap.trash
   const outletStage = stageMap.pump
-  const externalInlet = entryStage ? getPortPosition(entryStage, 'inlet').add(new THREE.Vector3(-6, 0, 0)) : null
+  const externalInlet = entryStage ? getPortPosition(entryStage, 'inlet').add(new THREE.Vector3(-7, 0, 0)) : null
   const disposalPoint = outletStage
     ? new THREE.Vector3(
         outletStage.position[0] + 8,
         rlToY(outletStage.ports?.outlet ?? 239.2, outletStage),
-        outletStage.position[2] + 1,
+        outletStage.position[2] + 1.8,
       )
     : null
 
   return (
     <Canvas
-      camera={{ position: [4, 10, 32], fov: 44 }}
+      camera={{ position: [5, 12, 65], fov: 42 }}
       dpr={[1, 2]}
       shadows
       style={{ borderRadius: 14 }}
@@ -486,8 +525,8 @@ function StageScene({ showOptional, selectedScenario }) {
       <directionalLight position={[10, 15, 10]} intensity={1.0} castShadow />
       <hemisphereLight skyColor="#7dd3fc" groundColor="#0f172a" intensity={0.35} />
 
-      {visibleStages.map((stage) => (
-        <TankNode key={stage.id} stage={stage} state={scenario?.tankStates?.[stage.id]} />
+      {visibleStages.map((stage, index) => (
+        <TankNode key={stage.id} stage={stage} state={scenario?.tankStates?.[stage.id]} orderIndex={index} />
       ))}
 
       {externalInlet && entryStage ? (
@@ -541,13 +580,19 @@ function StageScene({ showOptional, selectedScenario }) {
       })}
 
       {visibleStages.every((stage) => stage.id !== 'hold') ? (
-        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[7.5, -1.06, 0]}>
-          <planeGeometry args={[86, 26]} />
+        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[9, -1.06, 0]}>
+          <planeGeometry args={[132, 26]} />
           <meshStandardMaterial color="#0f172a" metalness={0.08} roughness={0.98} />
         </mesh>
       ) : null}
 
-      <OrbitControls enablePan={false} enableRotate enableZoom maxDistance={34} minDistance={10} />
+      <OrbitControls
+        enablePan
+        enableRotate
+        enableZoom
+        minDistance={12}
+        maxDistance={86}
+      />
     </Canvas>
   )
 }
@@ -676,7 +721,7 @@ function OverlayLegend({ selectedScenario }) {
         </div>
         <div>
           <strong>Core flow clarity</strong>
-          <p>Trash Tank → Dosing / Equalization → ATU / Aeration → Pump + Chlorination</p>
+          <p>Trash Tank → Dosing and Equalization → Biological Aeration → Pump and chlorination</p>
         </div>
         <div>
           <strong>Flow stop rule</strong>
