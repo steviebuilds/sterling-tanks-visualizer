@@ -1,57 +1,53 @@
-# Sterling Tanks Visualizer
+# Septic System
 
-Mobile-first React + Three.js visualizer for Sterling septic process flow and control logic. This revision focuses on static, engineering-readable visuals and explicit control semantics.
+Monorepo for the Sterling septic system work.
 
-## What changed
+## Apps
 
-- Removed animated pulse effects and other decorative motion from the scene.
-- Made tank volumes semi-transparent so internal levels/markers are visible.
-- Increased horizontal spacing and tank scale to reduce visual crowding.
-- Added per-tank RL bands and mapped inlet/outlet port elevations to RL-aware positions.
-- Added example fill states (`Normal`, `Low level`, `High level / clear-down`) to visualize float-switch semantics:
-  - pump-on float OFF blocks dosing/pumping
-  - high-level float ON enforces forced clear-down priority
-- Replaced acronym-heavy labels with clearer names for JS engineers, while preserving technical IDs in tooltips/notes.
-- Kept a compact 2D fallback map for quick logic checking on mobile and desktop.
+- `apps/visualiser`
+  The React + Vite reference app for system flow, control logic, pinouts, and clarifying questions.
+- `apps/firmware`
+  Reserved for the future PlatformIO ESP32 controller project. Scaffold only for now.
 
-## Notes / assumptions
+## Repo structure
 
-- RL references are mostly from `memory/sterling-septic-job/images/2026-03-26/sterling-div-layout-v3.png` and `memory/sterling-septic-job/docs/*`.
-- Not all RL values are explicitly documented in text. Values shown in the UI are treated as approximate where required.
-- Approximation note: optional **Holding / Distribution** RL entries are placeholders until final plan confirmation.
-- Scene annotations were moved onto shared empty space for readability, and OrbitControls pan is enabled so the full flow can be scrubbed around without crowding labels.
-- Technical IDs remain available in tooltips/secondary lines; labels default to operator-readable text first.
+```text
+apps/
+  firmware/
+  visualiser/
+docs/
+Dockerfile
+package.json
+yarn.lock
+```
 
 ## Engineering context
 
-Before touching app behavior, read:
+Before changing logic assumptions, read:
 
 - `docs/system-context.md`
-- `docs/system-context.md` checklist and assumptions section for open questions and unresolved hardware issues.
-
-Quick workflow:
-
-- Use this repo as a visual/reference layer only.
-- Use `docs/system-context.md` first when discussing control logic, IO mapping, or alarm behavior.
-- Confirm assumptions in docs with Sterling before changing anything in firmware or backend code.
+- the clarifying questions surfaced in `apps/visualiser/src/App.jsx`
 
 ## Local
 
 ```bash
-npm install
-npm run dev
+corepack enable
+yarn install
+yarn dev
 ```
 
-## Production sanity
+Root scripts currently target the visualiser workspace:
+
+- `yarn dev`
+- `yarn build`
+- `yarn lint`
+- `yarn preview`
+
+## Coolify / Docker
+
+The root `Dockerfile` is the deployment target. It installs workspace dependencies from the monorepo root and builds only `apps/visualiser`, then serves that build with nginx.
 
 ```bash
-npm run lint
-npm run build
-```
-
-Docker image:
-
-```bash
-docker build -t sterling-tanks-visualizer .
-docker run --rm -p 8080:80 sterling-tanks-visualizer
+docker build -t septic-system-visualiser .
+docker run --rm -p 8080:80 septic-system-visualiser
 ```

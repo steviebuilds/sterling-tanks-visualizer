@@ -1,4 +1,7 @@
 node_modules
+apps/*/node_modules
+dist
+apps/*/dist
 npm-debug.log
 Dockerfile
 .git
@@ -7,3 +10,4 @@ README.md
 .DS_Store
 .vscode
 .vite
+.turbo
