@@ -24,3 +24,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+apps/firmware/.pio
+apps/firmware/.pio-core
+apps/firmware/.vscode

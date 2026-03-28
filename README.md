@@ -4,10 +4,8 @@ Monorepo for the Sterling septic system work.
 
 ## Apps
 
-- `apps/visualiser`
-  The React + Vite reference app for system flow, control logic, pinouts, and clarifying questions.
-- `apps/firmware`
-  Reserved for the future PlatformIO ESP32 controller project. Scaffold only for now.
+- `apps/visualiser` The React + Vite reference app for system flow, control logic, pinouts, and clarifying questions.
+- `apps/firmware` PlatformIO ESP32 controller scaffold with a native-testable core and a thin hardware shell.
 
 ## Repo structure
 
@@ -42,6 +40,23 @@ Root scripts currently target the visualiser workspace:
 - `yarn build`
 - `yarn lint`
 - `yarn preview`
+
+## Firmware scaffold
+
+The firmware app lives at `apps/firmware` and is intentionally structured around testability:
+
+- pure C++ control core in `lib/SepticCore`
+- ESP32/Arduino integration in `lib/SepticHal` and `src/main.cpp`
+- native host tests in `apps/firmware/test`
+- architecture and implementation notes in `apps/firmware/docs`
+
+Typical commands:
+
+```bash
+cd apps/firmware
+pio test -e native
+pio run -e esp32dev
+```
 
 ## Coolify / Docker
 
