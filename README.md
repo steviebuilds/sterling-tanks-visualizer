@@ -22,6 +22,19 @@ Mobile-first React + Three.js visualizer for Sterling septic process flow and co
 - Scene annotations were moved onto shared empty space for readability, and OrbitControls pan is enabled so the full flow can be scrubbed around without crowding labels.
 - Technical IDs remain available in tooltips/secondary lines; labels default to operator-readable text first.
 
+## Engineering context
+
+Before touching app behavior, read:
+
+- `docs/system-context.md`
+- `docs/system-context.md` checklist and assumptions section for open questions and unresolved hardware issues.
+
+Quick workflow:
+
+- Use this repo as a visual/reference layer only.
+- Use `docs/system-context.md` first when discussing control logic, IO mapping, or alarm behavior.
+- Confirm assumptions in docs with Sterling before changing anything in firmware or backend code.
+
 ## Local
 
 ```bash
