@@ -159,6 +159,79 @@ h1 {
 	text-transform: uppercase;
 }
 
+.label-row,
+.control-with-tip {
+	display: flex;
+	align-items: center;
+	gap: 0.45rem;
+	min-width: 0;
+}
+
+.label-row {
+	justify-content: flex-start;
+}
+
+.control-with-tip {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.info-tip {
+	position: relative;
+	z-index: 5;
+	display: inline-grid;
+	place-items: center;
+	flex: 0 0 auto;
+	width: 1.05rem;
+	height: 1.05rem;
+	border: 1px solid var(--line);
+	border-radius: 999px;
+	background: rgb(255 255 255 / 85%);
+	color: var(--muted);
+	font-family: 'IBM Plex Mono', monospace;
+	font-size: 0.68rem;
+	font-weight: 800;
+	line-height: 1;
+	cursor: help;
+}
+
+.info-tip::after {
+	content: attr(data-tooltip);
+	position: absolute;
+	bottom: calc(100% + 0.45rem);
+	left: 50%;
+	width: min(17rem, calc(100vw - 2rem));
+	padding: 0.58rem 0.66rem;
+	border: 1px solid var(--line);
+	border-radius: 7px;
+	background: #17211e;
+	color: white;
+	box-shadow: 0 12px 30px rgb(31 49 43 / 18%);
+	font-family: 'IBM Plex Sans', sans-serif;
+	font-size: 0.78rem;
+	font-weight: 500;
+	line-height: 1.35;
+	opacity: 0;
+	pointer-events: none;
+	text-transform: none;
+	transform: translate(-50%, 4px);
+	transition:
+		opacity 140ms ease,
+		transform 140ms ease;
+}
+
+.info-tip:hover,
+.info-tip:focus-visible {
+	border-color: var(--line-strong);
+	color: var(--green);
+}
+
+.info-tip:hover::after,
+.info-tip:focus-visible::after {
+	opacity: 1;
+	transform: translate(-50%, 0);
+}
+
 .button-grid {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
