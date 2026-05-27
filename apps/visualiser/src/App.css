@@ -280,57 +280,12 @@ h1 {
 	min-height: 650px;
 	padding: clamp(0.9rem, 2.2vw, 1.3rem);
 	display: grid;
-	gap: 0.75rem;
-	grid-template-rows: auto 1fr;
 	overflow: hidden;
 	background:
 		linear-gradient(90deg, rgb(205 216 210 / 42%) 1px, transparent 1px),
 		linear-gradient(rgb(205 216 210 / 42%) 1px, transparent 1px),
 		#f9fbf6;
 	background-size: 34px 34px;
-}
-
-.plant-status,
-.core-banner {
-	display: grid;
-	grid-template-columns: auto 1fr;
-	align-items: center;
-	gap: 0.56rem;
-	min-width: 0;
-	border: 1px solid var(--line);
-	border-radius: 7px;
-	background: rgb(255 255 255 / 86%);
-	color: var(--muted);
-	font-family: 'IBM Plex Mono', monospace;
-	font-size: 0.68rem;
-	font-weight: 700;
-}
-
-.plant-status {
-	width: fit-content;
-	max-width: 100%;
-	padding: 0.42rem 0.54rem;
-	justify-self: end;
-}
-
-.plant-status span,
-.core-banner > span {
-	width: 0.62rem;
-	height: 0.62rem;
-	border-radius: 999px;
-	background: var(--line-strong);
-}
-
-.plant-status span.ready,
-.core-banner.ready > span {
-	background: var(--green);
-	box-shadow: 0 0 0 5px rgb(22 118 111 / 12%);
-}
-
-.plant-status span.missing,
-.core-banner.missing > span {
-	background: var(--amber);
-	box-shadow: 0 0 0 5px rgb(201 115 28 / 12%);
 }
 
 .plant-head {
@@ -1416,7 +1371,7 @@ h1 {
 	.status-panel {
 		grid-column: 1 / -1;
 		display: grid;
-		grid-template-columns: 0.85fr 1fr 1fr 1.2fr;
+		grid-template-columns: 1fr 1fr 1.2fr;
 	}
 }
 
@@ -1513,27 +1468,6 @@ h1 {
 	.system-map {
 		grid-template-columns: 1fr;
 	}
-}
-
-.core-banner {
-	align-self: start;
-	padding: 0.62rem;
-}
-
-.core-banner strong {
-	display: block;
-	color: var(--ink);
-	font-size: 0.72rem;
-	line-height: 1.25;
-}
-
-.core-banner p {
-	margin: 0.16rem 0 0;
-	overflow-wrap: anywhere;
-	color: var(--muted);
-	font-size: 0.68rem;
-	font-weight: 500;
-	line-height: 1.3;
 }
 
 .confirmation-box {

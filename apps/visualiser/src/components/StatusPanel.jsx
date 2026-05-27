@@ -1,23 +1,12 @@
 import { Status } from './Status';
 
 export function StatusPanel({
-	coreState,
 	events,
 	outputs,
 	selectedOutput,
 }) {
-	const statusCopy = coreState.ready ? 'Core logic active' : 'Fallback logic active';
-
 	return (
 		<aside className="status-panel" aria-label="Controller status">
-			<div className={`core-banner ${coreState.ready ? 'ready' : 'missing'}`}>
-				<span />
-				<div>
-					<strong>{statusCopy}</strong>
-					{coreState.error ? <p>{coreState.error}</p> : <p>Outputs are calculated from the firmware Core.</p>}
-				</div>
-			</div>
-
 			<div className="panel-section">
 				<p className="panel-label">Outputs</p>
 				<div className="status-grid">

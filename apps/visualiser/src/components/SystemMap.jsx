@@ -1,15 +1,11 @@
 import { FLOAT_MARKERS, SIMULATOR_CONFIG } from '../simulator/simulatorModel';
 
-export function SystemMap({ blowerFault, coreReady, levels, onSelectTank, outputs, rebootHold, selectedTank }) {
+export function SystemMap({ blowerFault, levels, onSelectTank, outputs, rebootHold, selectedTank }) {
 	const atuToEffluentActive = outputs.blower && !rebootHold;
 	const effluentDoseActive = outputs.valve;
 
 	return (
 		<section className="plant-view" aria-label="Animated process view">
-			<div className="plant-status" aria-live="polite">
-				<span className={coreReady ? 'ready' : 'missing'} />
-				{coreReady ? 'Firmware Core driving outputs' : 'Core unavailable, showing fallback model'}
-			</div>
 			<div className="system-map">
 				<PassiveStage className="stage-pretreatment" title="Pretreatment" kicker="Inlet" detail="Gravity flow" />
 				<FlowPipe className="pipe-top-a" active />

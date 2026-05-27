@@ -91,7 +91,6 @@ export function SimulatorView() {
 				/>
 				<SystemMap
 					blowerFault={outputs.blowerFault}
-					coreReady={coreState.ready}
 					levels={levels}
 					onSelectTank={(tank) => {
 						setSelectedTank(tank);
@@ -102,7 +101,6 @@ export function SimulatorView() {
 					selectedTank={selectedTank}
 				/>
 				<StatusPanel
-					coreState={coreState}
 					events={events}
 					outputs={outputs}
 					selectedOutput={outputs[selectedTank]}
