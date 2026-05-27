@@ -5,14 +5,6 @@ import { ControlsPanel } from './ControlsPanel';
 import { StatusPanel } from './StatusPanel';
 import { SystemMap } from './SystemMap';
 
-const CONFIRMATION_ITEMS = [
-	'Confirm HIGH behavior: stop and latch, or alarm while pumping down.',
-	'Confirm whether CALL is a distinct float input or just the normal lead/lag naming.',
-	'Confirm whether the effluent pump station should run timed dosing only, demand pumping only, or timed dosing with high-level override.',
-	'Confirm final dose interval, run time, and active disposal zone count.',
-	'Confirm whether each tank uses the same LOW/CALL/LAG/HIGH float order.',
-];
-
 export function SimulatorView() {
 	const [selectedTank, setSelectedTank] = useState('effluent');
 	const [levels, setLevels] = useState({
@@ -106,23 +98,6 @@ export function SimulatorView() {
 					selectedOutput={outputs[selectedTank]}
 				/>
 			</div>
-			<ConfirmationBox items={CONFIRMATION_ITEMS} />
 		</section>
-	);
-}
-
-function ConfirmationBox({ items }) {
-	return (
-		<aside className="confirmation-box" aria-label="Items to confirm with Sterling">
-			<div>
-				<p className="panel-label">Confirm with Sterling</p>
-				<strong>Open points before signoff</strong>
-			</div>
-			<ol>
-				{items.map((item) => (
-					<li key={item}>{item}</li>
-				))}
-			</ol>
-		</aside>
 	);
 }

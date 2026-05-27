@@ -1600,46 +1600,6 @@ h1 {
 	}
 }
 
-.confirmation-box {
-	display: grid;
-	grid-template-columns: minmax(180px, 260px) 1fr;
-	gap: 1rem;
-	padding: 1rem;
-	border: 1px solid color-mix(in srgb, var(--amber) 28%, var(--line));
-	border-radius: var(--radius);
-	background: color-mix(in srgb, var(--amber-soft) 38%, white);
-	box-shadow: 0 14px 38px rgb(31 49 43 / 8%);
-}
-
-.confirmation-box strong {
-	display: block;
-	margin-top: 0.18rem;
-	color: var(--ink);
-	font-size: 1rem;
-	line-height: 1.2;
-}
-
-.confirmation-box ol {
-	margin: 0;
-	padding-left: 1.35rem;
-	display: grid;
-	gap: 0.45rem;
-	color: var(--ink);
-	line-height: 1.4;
-}
-
-.confirmation-box li::marker {
-	color: var(--green);
-	font-family: 'IBM Plex Mono', monospace;
-	font-weight: 800;
-}
-
-@media (max-width: 860px) {
-	.confirmation-box {
-		grid-template-columns: 1fr;
-	}
-}
-
 @media (prefers-reduced-motion: reduce) {
 	*,
 	*::before,
