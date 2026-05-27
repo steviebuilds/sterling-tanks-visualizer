@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useCoreWasm } from '../core/useCoreWasm';
-import { LEVELS, SIMULATOR_CONFIG, TANKS } from '../simulator/simulatorModel';
+import { LEVELS, TANKS } from '../simulator/simulatorModel';
 import { ControlsPanel } from './ControlsPanel';
 import { StatusPanel } from './StatusPanel';
 import { SystemMap } from './SystemMap';
@@ -11,7 +11,6 @@ export function SimulatorView() {
 		eq: LEVELS.normal,
 		effluent: LEVELS.normal,
 	});
-	const [highRule, setHighRule] = useState(SIMULATOR_CONFIG.highRuleDefault);
 	const [pumpProofFault, setPumpProofFault] = useState(false);
 	const [blowerFault, setBlowerFault] = useState(false);
 	const [rebootHold, setRebootHold] = useState(false);
@@ -23,14 +22,13 @@ export function SimulatorView() {
 		() => ({
 			alarmSilenced,
 			blowerFault,
-			highRule,
 			levels,
 			pumpProofFault,
 			rebootHold,
 			resetVersion,
 			selectedTank,
 		}),
-		[alarmSilenced, blowerFault, highRule, levels, pumpProofFault, rebootHold, resetVersion, selectedTank],
+		[alarmSilenced, blowerFault, levels, pumpProofFault, rebootHold, resetVersion, selectedTank],
 	);
 	const coreState = useCoreWasm(simulationInputs);
 	const outputs = coreState.outputs;
@@ -66,7 +64,6 @@ export function SimulatorView() {
 				<ControlsPanel
 					alarmSilenced={alarmSilenced}
 					blowerFault={blowerFault}
-					highRule={highRule}
 					onEvent={addEvent}
 					onReset={reset}
 					onSelectedLevelChange={updateSelectedLevel}
@@ -76,7 +73,6 @@ export function SimulatorView() {
 					selectedTank={selectedTank}
 					setAlarmSilenced={setAlarmSilenced}
 					setBlowerFault={setBlowerFault}
-					setHighRule={setHighRule}
 					setPumpProofFault={setPumpProofFault}
 					setRebootHold={setRebootHold}
 					setSelectedTank={setSelectedTank}

@@ -15,6 +15,7 @@ const PUMPS_PER_STATION = 2;
 const BLOWER_COUNT = 8;
 const VALVE_COUNT = 12;
 const SCAN_MS = 100;
+const HIGH_WATER_PUMP_DOWN = 1;
 
 function emptyCoreState() {
 	return {
@@ -25,20 +26,14 @@ function emptyCoreState() {
 	};
 }
 
-function highRuleToCoreValue(highRule) {
-	return highRule === 'pumpdown' ? 1 : 0;
-}
-
-function fallbackOutputs({ alarmSilenced, blowerFault, highRule, levels, pumpProofFault, rebootHold, selectedTank }) {
+function fallbackOutputs({ alarmSilenced, blowerFault, levels, pumpProofFault, rebootHold, selectedTank }) {
 	const eq = getTankOutput({
 		level: levels.eq,
-		highRule,
 		proofFault: pumpProofFault && selectedTank === 'eq',
 		rebootHold,
 	});
 	const effluent = getTankOutput({
 		level: levels.effluent,
-		highRule,
 		proofFault: pumpProofFault && selectedTank === 'effluent',
 		rebootHold,
 	});
@@ -216,7 +211,6 @@ export function useCoreWasm(simulationInputs) {
 		}
 
 		const key = [
-			simulationInputs.highRule,
 			simulationInputs.rebootHold ? 'hold' : 'run',
 			simulationInputs.resetVersion,
 		].join(':');
@@ -230,7 +224,7 @@ export function useCoreWasm(simulationInputs) {
 				SIMULATOR_CONFIG.core.pumpProofTimeoutMs,
 				SIMULATOR_CONFIG.core.blowerProofTimeoutMs,
 				SIMULATOR_CONFIG.core.activeZoneCount,
-				highRuleToCoreValue(simulationInputs.highRule),
+				HIGH_WATER_PUMP_DOWN,
 				simulationInputs.rebootHold ? 0 : 1,
 			);
 			keyRef.current = key;

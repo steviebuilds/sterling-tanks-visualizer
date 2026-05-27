@@ -290,13 +290,6 @@ h1 {
 	gap: 0.44rem;
 }
 
-.quiet-copy {
-	margin: 0;
-	color: var(--muted);
-	font-size: 0.88rem;
-	line-height: 1.4;
-}
-
 .switch-stack {
 	display: grid;
 	gap: 0.46rem;

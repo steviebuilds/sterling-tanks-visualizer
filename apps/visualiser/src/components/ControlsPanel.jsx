@@ -4,7 +4,6 @@ import { clamp, SIMULATOR_CONFIG, TANKS } from '../simulator/simulatorModel';
 const HELP = {
 	controlTank: 'Choose which pump tank the level and pump-proof controls apply to.',
 	tankLevel: 'Fill or drain the selected tank; LOW, CALL, LAG, and HIGH change automatically as the water crosses each float.',
-	highRule: 'This is the main Sterling question: should HIGH pump the tank down while alarming, or stop/latch the pumps off?',
 	faults: 'Fault switches simulate failed proof signals and restart behavior so Sterling can see alarm and recovery logic.',
 	pumpProof: 'Simulates a pump being commanded on but no flow/proof signal coming back before timeout.',
 	blowerProof: 'Simulates the ATU blower being commanded on but no air/proof signal coming back before timeout.',
@@ -15,7 +14,6 @@ const HELP = {
 export function ControlsPanel({
 	alarmSilenced,
 	blowerFault,
-	highRule,
 	onEvent,
 	onReset,
 	onSelectedLevelChange,
@@ -25,7 +23,6 @@ export function ControlsPanel({
 	selectedTank,
 	setAlarmSilenced,
 	setBlowerFault,
-	setHighRule,
 	setPumpProofFault,
 	setRebootHold,
 	setSelectedTank,
@@ -89,37 +86,6 @@ export function ControlsPanel({
 						Fill
 					</button>
 				</div>
-			</div>
-
-			<div className="panel-section">
-				<PanelLabel help={HELP.highRule}>High rule</PanelLabel>
-				<div className="segmented">
-					<button
-						className={highRule === 'pumpdown' ? 'active' : ''}
-						onClick={() => {
-							setHighRule('pumpdown');
-							onEvent('HIGH rule: pump-down');
-						}}
-						type="button"
-					>
-						Pump down
-					</button>
-					<button
-						className={highRule === 'stop' ? 'active' : ''}
-						onClick={() => {
-							setHighRule('stop');
-							onEvent('HIGH rule: stop pumps');
-						}}
-						type="button"
-					>
-						Stop pumps
-					</button>
-				</div>
-				<p className="quiet-copy">
-					{highRule === 'pumpdown'
-						? 'HIGH keeps alarming and runs pumps.'
-						: 'HIGH alarms and holds pumps off.'}
-				</p>
 			</div>
 
 			<div className="panel-section">

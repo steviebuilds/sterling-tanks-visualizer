@@ -24,7 +24,6 @@ export const SIMULATOR_CONFIG = {
 			high: { label: 'HIGH', percent: 88, trip: 'above' },
 		},
 	},
-	highRuleDefault: 'pumpdown',
 };
 
 export const LEVELS = SIMULATOR_CONFIG.tank.levels;
@@ -76,12 +75,11 @@ export const levelName = (level) => {
 	return 'Normal';
 };
 
-export const getTankOutput = ({ level, highRule, proofFault, rebootHold }) => {
+export const getTankOutput = ({ level, proofFault, rebootHold }) => {
 	const floats = getFloats(level);
-	const highStop = floats.high && highRule === 'stop';
-	const pumpAllowed = !rebootHold && !floats.low && !proofFault && !highStop;
+	const pumpAllowed = !rebootHold && !floats.low && !proofFault;
 	const pumpOne = pumpAllowed && (floats.call || floats.high);
-	const pumpTwo = pumpAllowed && (floats.lag || (floats.high && highRule === 'pumpdown'));
+	const pumpTwo = pumpAllowed && (floats.lag || floats.high);
 
 	return {
 		floats,
