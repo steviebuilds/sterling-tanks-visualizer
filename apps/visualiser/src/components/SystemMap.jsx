@@ -162,12 +162,25 @@ function PassiveStage({ className, detail, kicker, title }) {
 					<p>{detail}</p>
 				</div>
 			</div>
-			<div className="passive-symbol" aria-hidden="true">
-				<span />
-				<span />
-				<span />
-			</div>
+			<PretreatmentGraphic />
 		</article>
+	);
+}
+
+function PretreatmentGraphic() {
+	return (
+		<svg className="process-graphic pretreatment-graphic" viewBox="0 0 260 150" aria-hidden="true">
+			<path className="process-pipe muted" d="M5 58H44" />
+			<path className="process-pipe muted" d="M216 58H255" />
+			<rect className="process-vessel" x="44" y="28" width="172" height="94" rx="28" />
+			<path className="process-liquid muted-liquid" d="M61 70H199V105H61Z" />
+			<path className="process-layer scum" d="M66 62C92 55 110 68 132 62S171 55 195 63" />
+			<path className="process-layer sludge" d="M70 106H190" />
+			<path className="process-baffle" d="M91 41V96" />
+			<path className="process-baffle" d="M169 41V96" />
+			<circle className="process-node" cx="44" cy="58" r="5" />
+			<circle className="process-node" cx="216" cy="58" r="5" />
+		</svg>
 	);
 }
 
@@ -200,12 +213,23 @@ function ChlorinatorStage({ active, className }) {
 					<p>Inline before field</p>
 				</div>
 			</div>
-			<div className="chlorinator-tube" aria-hidden="true">
-				<span />
-				<span />
-				<span />
-			</div>
+			<ChlorinatorGraphic active={active} />
 		</article>
+	);
+}
+
+function ChlorinatorGraphic({ active }) {
+	return (
+		<svg className={`process-graphic chlorinator-graphic ${active ? 'active' : ''}`} viewBox="0 0 260 150" aria-hidden="true">
+			<path className="process-pipe" d="M4 76H77" />
+			<path className="process-pipe" d="M183 76H256" />
+			<rect className="process-vessel chlorinator-body" x="76" y="37" width="108" height="78" rx="25" />
+			<path className="chlorinator-water" d="M88 76H172" />
+			{[0, 1, 2].map((index) => (
+				<circle className="chlorine-tablet" cx={110 + index * 20} cy="74" key={index} r="9" />
+			))}
+			<path className="process-layer chlorinator-cap" d="M99 37V24H162V37" />
+		</svg>
 	);
 }
 
@@ -219,11 +243,26 @@ function DisposalStage({ active, className }) {
 					<p>One zone per dose</p>
 				</div>
 			</div>
-			<div className="field-lines">
-				{Array.from({ length: 5 }, (_, index) => (
-					<span key={index} />
-				))}
-			</div>
+			<DisposalGraphic active={active} />
 		</article>
+	);
+}
+
+function DisposalGraphic({ active }) {
+	return (
+		<svg className={`process-graphic disposal-graphic ${active ? 'active' : ''}`} viewBox="0 0 260 150" aria-hidden="true">
+			<path className="process-pipe" d="M6 74H55" />
+			<path className="field-manifold" d="M58 44V116" />
+			{[0, 1, 2, 3].map((index) => {
+				const y = 46 + index * 22;
+				return (
+					<g key={y}>
+						<path className="field-lateral" d={`M58 ${y}H232`} />
+						<path className="field-perf" d={`M86 ${y + 7}H206`} />
+					</g>
+				);
+			})}
+			<circle className="process-node" cx="58" cy="74" r="6" />
+		</svg>
 	);
 }
