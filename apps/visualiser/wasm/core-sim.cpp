@@ -3,11 +3,12 @@
 #include <emscripten/emscripten.h>
 
 #include "septic/core/ControllerConfig.h"
-#include "septic/core/SimulationHarness.h"
+#include "septic/simulator/SimulationHarness.h"
 
 namespace
 {
 	using namespace septic::core;
+	using septic::sim::SimulationHarness;
 
 	ControllerConfig simConfig(const std::uint32_t float_debounce_ms = 0,
 							   const std::uint32_t pump_proof_timeout_ms = 15UL * 1000UL,

@@ -1,12 +1,13 @@
 #include <unity.h>
 
 #include "septic/core/ControllerApp.h"
-#include "septic/core/SimulationHarness.h"
+#include "septic/simulator/SimulationHarness.h"
 
 namespace
 {
 
 	using namespace septic::core;
+	using septic::sim::SimulationHarness;
 
 	class FakeClock final : public IClock
 	{

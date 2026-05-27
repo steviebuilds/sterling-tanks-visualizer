@@ -11,7 +11,7 @@
     "${workspaceFolder}/apps/firmware/include",
     "${workspaceFolder}/apps/firmware/src",
     "${workspaceFolder}/apps/firmware/lib/Core/include",
-    "${workspaceFolder}/apps/firmware/lib/ESP32Layer/include",
+    "${workspaceFolder}/apps/firmware/lib/ESP32Harness/include",
     "${userHome}/.platformio/packages/framework-arduinoespressif32/cores/esp32",
     "${userHome}/.platformio/packages/framework-arduinoespressif32/variants/esp32"
   ],

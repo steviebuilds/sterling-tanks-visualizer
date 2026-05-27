@@ -27,8 +27,11 @@ apps/firmware/
     Core/
       include/septic/core/
       src/
-    ESP32Layer/
+    ESP32Harness/
       include/septic/hal/
+      src/
+    SimulatorHarness/
+      include/septic/simulator/
       src/
   src/
     main.cpp
@@ -61,8 +64,8 @@ Run `pio run -t compiledb` after changing PlatformIO environments if VS Code sho
 ## Current status
 
 - The control core implements the current Sterling rules in hardware-agnostic C++.
-- `SimulationHarness` runs the real controller with fake time and inputs for tests and WASM.
+- `lib/SimulatorHarness` runs the real controller with fake time and inputs for tests and WASM.
 - Native tests cover the main control scenarios before hardware exists.
 - ESP32 builds compile and run through the site profile / HAL IO adapter.
-- Client-editable pins and telemetry placeholders live in `lib/ESP32Layer/include/septic/hal/SiteConstants.h`.
+- Client-editable pins and telemetry placeholders live in `lib/ESP32Harness/include/septic/hal/SiteConstants.h`.
 - Persistence, transport, and final HAND-mode behavior are still open.

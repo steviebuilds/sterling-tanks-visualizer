@@ -1,12 +1,12 @@
-#include "septic/core/SimulationHarness.h"
+#include "septic/simulator/SimulationHarness.h"
 
-namespace septic::core
+namespace septic::sim
 {
 	namespace
 	{
 		bool validStationPump(const std::size_t station_index, const std::size_t pump_index)
 		{
-			return station_index < kPumpStationCount && pump_index < kPumpsPerStation;
+			return station_index < core::kPumpStationCount && pump_index < core::kPumpsPerStation;
 		}
 	} // namespace
 
@@ -25,11 +25,11 @@ namespace septic::core
 		now_ms_ = 0;
 	}
 
-	SimulationHarness::SimulationHarness(ControllerConfig config)
-		: config_(normalizedControllerConfig(config)),
+	SimulationHarness::SimulationHarness(core::ControllerConfig config)
+		: config_(core::normalizedControllerConfig(config)),
 		  app_(config_, clock_, telemetry_)
 	{
-		setAllEquipmentModes(EquipmentMode::Auto);
+		setAllEquipmentModes(core::EquipmentMode::Auto);
 		setAllPumpFlowProofs(true);
 		setAllBlowerAirProofs(true);
 	}
@@ -39,31 +39,31 @@ namespace septic::core
 		app_.completeStartupChecks();
 	}
 
-	const ControllerState &SimulationHarness::tick(const std::uint32_t elapsed_ms)
+	const core::ControllerState &SimulationHarness::tick(const std::uint32_t elapsed_ms)
 	{
 		clock_.advanceBy(elapsed_ms);
 		inputs_.sampled_at_ms = clock_.millis();
 		return app_.tick(inputs_);
 	}
 
-	const ControllerState &SimulationHarness::state() const
+	const core::ControllerState &SimulationHarness::state() const
 	{
 		return app_.currentState();
 	}
 
-	InputSnapshot &SimulationHarness::inputs()
+	core::InputSnapshot &SimulationHarness::inputs()
 	{
 		return inputs_;
 	}
 
-	const InputSnapshot &SimulationHarness::inputs() const
+	const core::InputSnapshot &SimulationHarness::inputs() const
 	{
 		return inputs_;
 	}
 
-	void SimulationHarness::setTankFloats(const std::size_t tank_index, const FloatInputs floats)
+	void SimulationHarness::setTankFloats(const std::size_t tank_index, const core::FloatInputs floats)
 	{
-		if (tank_index >= kTankCount)
+		if (tank_index >= core::kTankCount)
 		{
 			return;
 		}
@@ -85,7 +85,7 @@ namespace septic::core
 
 	void SimulationHarness::setPumpMode(const std::size_t station_index,
 										const std::size_t pump_index,
-										const EquipmentMode mode)
+										const core::EquipmentMode mode)
 	{
 		if (!validStationPump(station_index, pump_index))
 		{
@@ -97,7 +97,7 @@ namespace septic::core
 
 	void SimulationHarness::setBlowerAirProof(const std::size_t blower_index, const bool proven)
 	{
-		if (blower_index >= kBlowerCount)
+		if (blower_index >= core::kBlowerCount)
 		{
 			return;
 		}
@@ -105,9 +105,9 @@ namespace septic::core
 		inputs_.blowers.air_proven[blower_index] = proven;
 	}
 
-	void SimulationHarness::setBlowerMode(const std::size_t blower_index, const EquipmentMode mode)
+	void SimulationHarness::setBlowerMode(const std::size_t blower_index, const core::EquipmentMode mode)
 	{
-		if (blower_index >= kBlowerCount)
+		if (blower_index >= core::kBlowerCount)
 		{
 			return;
 		}
@@ -138,7 +138,7 @@ namespace septic::core
 		inputs_.blowers.air_proven.fill(proven);
 	}
 
-	void SimulationHarness::setAllEquipmentModes(const EquipmentMode mode)
+	void SimulationHarness::setAllEquipmentModes(const core::EquipmentMode mode)
 	{
 		for (auto &station : inputs_.pump_stations)
 		{
@@ -147,4 +147,4 @@ namespace septic::core
 		inputs_.blowers.hoa.fill(mode);
 	}
 
-} // namespace septic::core
+} // namespace septic::sim

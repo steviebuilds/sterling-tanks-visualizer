@@ -28,7 +28,7 @@ That lets us run the important decisions in native tests on a laptop.
 
 ### 2\. Thin hardware shell
 
-`src/main.cpp` and `lib/ESP32Layer` should do only platform work:
+`src/main.cpp` and `lib/ESP32Harness` should do only platform work:
 
 - read inputs
 - write outputs
@@ -123,7 +123,7 @@ We still compile for the actual target so platform breakage is caught early, eve
 
 ### Simulation
 
-`lib/Core` includes `SimulationHarness`, which runs the real controller with a fake clock and controlled input snapshots. That is the shared adapter for:
+`lib/SimulatorHarness` runs the real controller with a fake clock and controlled input snapshots. That is the shared adapter for:
 
 - rising tank levels
 - low-level cutouts

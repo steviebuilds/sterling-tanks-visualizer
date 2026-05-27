@@ -1,16 +1,18 @@
 FROM emscripten/emsdk:latest AS core-wasm
 WORKDIR /src
 COPY apps/firmware/lib/Core apps/firmware/lib/Core
+COPY apps/firmware/lib/SimulatorHarness apps/firmware/lib/SimulatorHarness
 COPY apps/visualiser/wasm apps/visualiser/wasm
 RUN mkdir -p apps/visualiser/public/core && \
     em++ -std=c++17 -O3 \
     -I/src/apps/firmware/lib/Core/include \
+    -I/src/apps/firmware/lib/SimulatorHarness/include \
     /src/apps/visualiser/wasm/core-sim.cpp \
     /src/apps/firmware/lib/Core/src/ControlLoop.cpp \
     /src/apps/firmware/lib/Core/src/ControllerApp.cpp \
     /src/apps/firmware/lib/Core/src/ControllerConfig.cpp \
     /src/apps/firmware/lib/Core/src/RecoveryManager.cpp \
-    /src/apps/firmware/lib/Core/src/SimulationHarness.cpp \
+    /src/apps/firmware/lib/SimulatorHarness/src/SimulationHarness.cpp \
     -sWASM=1 \
     -sMODULARIZE=1 \
     -sEXPORT_ES6=1 \

@@ -32,6 +32,6 @@ This captures the current firmware interpretation of Sterling's 2026-05-13 reply
 
 ## Profile Edit Points
 
-Client-editable constants and pin placeholders live in `lib/ESP32Layer/include/septic/hal/SiteConstants.h`.
+Client-editable constants and pin placeholders live in `lib/ESP32Harness/include/septic/hal/SiteConstants.h`.
 
 The current constants name every expected logical point but leave physical pins as `-1`. Unmapped inputs use conservative bench defaults: inactive floats, AUTO HOA, and healthy proof signals. Unmapped outputs are ignored. Fill the constants from the final terminal map before field use.
