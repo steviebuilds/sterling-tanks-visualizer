@@ -44,14 +44,6 @@ export const TANKS = {
 	},
 };
 
-export const SCENARIOS = [
-	{ id: 'normal', label: 'Normal', level: LEVELS.normal },
-	{ id: 'call', label: 'Pump call', level: LEVELS.call },
-	{ id: 'lag', label: 'Lag', level: LEVELS.lag },
-	{ id: 'high', label: 'High', level: LEVELS.high },
-	{ id: 'low', label: 'Low', level: LEVELS.low },
-];
-
 export const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 
 export const tankPercentToSvgY = (percent) =>

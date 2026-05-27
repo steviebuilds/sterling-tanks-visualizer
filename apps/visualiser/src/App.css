@@ -243,13 +243,6 @@ h1 {
 	transform: translate(-50%, 0);
 }
 
-.button-grid {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	gap: 0.44rem;
-}
-
-.button-grid button,
 .stepper button,
 .segmented button,
 .reset-button,
@@ -267,7 +260,6 @@ h1 {
 		box-shadow 160ms ease;
 }
 
-.button-grid button,
 .stepper button,
 .segmented button,
 .reset-button {
@@ -276,7 +268,6 @@ h1 {
 	font-weight: 700;
 }
 
-.button-grid button:hover,
 .stepper button:hover,
 .segmented button:hover,
 .reset-button:hover,
@@ -285,7 +276,6 @@ h1 {
 	border-color: var(--line-strong);
 }
 
-.button-grid button.active,
 .segmented button.active {
 	border-color: color-mix(in srgb, var(--green) 48%, var(--line));
 	background: var(--green-soft);

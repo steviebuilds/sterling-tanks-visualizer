@@ -1,9 +1,9 @@
 import { Toggle } from './Toggle';
-import { clamp, levelName, SCENARIOS, SIMULATOR_CONFIG, TANKS } from '../simulator/simulatorModel';
+import { clamp, SIMULATOR_CONFIG, TANKS } from '../simulator/simulatorModel';
 
 const HELP = {
 	controlTank: 'Choose which pump tank the level and pump-proof controls apply to.',
-	tankLevel: 'These buttons move the selected tank across the float states we believe exist: LOW, CALL, LAG, and HIGH.',
+	tankLevel: 'Fill or drain the selected tank; LOW, CALL, LAG, and HIGH change automatically as the water crosses each float.',
 	highRule: 'This is the main Sterling question: should HIGH pump the tank down while alarming, or stop/latch the pumps off?',
 	faults: 'Fault switches simulate failed proof signals and restart behavior so Sterling can see alarm and recovery logic.',
 	pumpProof: 'Simulates a pump being commanded on but no flow/proof signal coming back before timeout.',
@@ -57,18 +57,6 @@ export function ControlsPanel({
 
 			<div className="panel-section">
 				<PanelLabel help={HELP.tankLevel}>Tank level</PanelLabel>
-				<div className="button-grid">
-					{SCENARIOS.map((scenario) => (
-						<button
-							className={levelName(selectedLevel) === scenario.label ? 'active' : ''}
-							key={scenario.id}
-							onClick={() => updateSelectedLevel(scenario.level, `${scenario.label} selected`)}
-							type="button"
-						>
-							{scenario.label}
-						</button>
-					))}
-				</div>
 				<div className="stepper">
 					<button
 						onClick={() =>
