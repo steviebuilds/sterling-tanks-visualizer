@@ -15,7 +15,7 @@ Build an ESP32 controller that is boring in the best possible way:
 
 ### 1\. Domain core first
 
-The real control logic should live in `lib/SepticCore` as plain C++ with no direct dependency on:
+The real control logic should live in `lib/Core` as plain C++ with no direct dependency on:
 
 - Arduino globals
 - GPIO APIs
@@ -28,7 +28,7 @@ That lets us run the important decisions in native tests on a laptop.
 
 ### 2\. Thin hardware shell
 
-`src/main.cpp` and `lib/SepticHal` should do only platform work:
+`src/main.cpp` and `lib/ESP32Layer` should do only platform work:
 
 - read inputs
 - write outputs
@@ -121,9 +121,9 @@ These should carry most of the confidence:
 
 We still compile for the actual target so platform breakage is caught early, even without hardware in hand.
 
-### Future simulation
+### Simulation
 
-Once real Sterling rules are clearer, add scenario tests that replay:
+`lib/Core` includes `SimulationHarness`, which runs the real controller with a fake clock and controlled input snapshots. That is the shared adapter for:
 
 - rising tank levels
 - low-level cutouts
@@ -131,3 +131,5 @@ Once real Sterling rules are clearer, add scenario tests that replay:
 - blower proof failures
 - reboot during alarm
 - API outage and replay
+
+The native Unity tests cover short deterministic cases. The visualiser and any long-running replay tests should use the same harness instead of recreating controller behaviour in TypeScript.

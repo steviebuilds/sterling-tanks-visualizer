@@ -2,6 +2,8 @@
 
 This document is the engineering reference for the Sterling septic controller stack as represented in this repo. It captures the control scope, data flow, and implementation assumptions without binding any one hardware revision as final.
 
+Latest Gmail-derived project memory lives in [`docs/sterling-email-history.md`](./sterling-email-history.md). The current firmware rules are based mainly on Sterling's detailed 2026-05-13 reply, with a 2026-05-19 follow-up preserved as conflicting context where it differs.
+
 ## 1) Project scope and architecture (SOW-based)
 
 The project is an **OSSF control stack** with three software surfaces:
@@ -82,7 +84,8 @@ In-scope MVP behavior:
 - **Float interlock**:
   - Pump-on float OFF blocks pump start for that tank.
 - **High-level interlock**:
-  - Any high-level float ON drives forced clear-down behavior for the affected stage/flow path.
+  - Current firmware baseline from Sterling's 2026-05-13 email: any HIGH float ON stops all pumps for that tank, inhibits AUTO, activates audible/visual alarm, latches the fault, and requires manual acknowledgement after the float clears.
+  - Sterling's 2026-05-19 follow-up instead describes high level as schedule override with lead pump, then both pumps if level continues rising. Treat this as unresolved until confirmed on a call.
 - **Flow validation interlock**:
   - If a component is commanded ON but no expected flow pulse appears within timeout, stop device and alarm.
 - **Blower validation interlock**:
@@ -113,20 +116,21 @@ The documented wastewater chain is:
    - Dosed and/or time/interval controlled fill to ATU feed.
 3. **ATU (aerobic treatment)**
    - Aerators/blowers provide oxygenation.
-4. **Pump + chlorination**
-   - Treated water is pumped/conditioned to disposal.
+4. **Effluent holding / pump tank + chlorination**
+   - Treated water exits the ATU into the effluent holding/pump tank, then is pumped/conditioned to disposal.
 
-### 4.1 Optional stage at end
+### 4.1 Clarified terminal stage
 
-- **Disposal / holding / distribution vessel** is still an open architectural question.
-- Current docs treat it as optional terminal node to confirm by layout and wiring response.
+- Sterling's 2026-05-13 email clarifies the corrected flow as `ATU -> Effluent Holding/Pump Tank -> disposal field`.
+- The 2,000 gallon tank does not feed into the ATU; it is downstream treated-effluent capacity.
+- A corrected drawing is still pending because the plan/elevation labels are inconsistent.
 
 ## 5) Control logic rules (from meeting notes)
 
-Use these as baseline behaviors unless superseded by signed-off pinout + safety test notes:
+Use these as baseline behaviours unless superseded by signed-off pinout + safety test notes:
 
 - `pump-on float OFF => run-block`
-- `high level ON => forced clear-down`
+- `high level ON => stop affected tank pumps + latch fault` per 2026-05-13 email; 2026-05-19 conflicts and says emergency pump-down, so confirm before commissioning.
 - `flow-on-command timeout => stop + alarm`
 - `blower command/no airflow => stop + alarm`
 - `disposal mismatch/pressure delta => maintenance`
@@ -257,10 +261,9 @@ Use these as baseline behaviors unless superseded by signed-off pinout + safety 
 ## 8) IO map ambiguities to resolve before coding
 
 - **SOW says no direct ESP32 GPIO for field I/O**, but DI/DO entries for slot 0 and slot 2 are marked as `ESP32 digital input bus` and `ESP32 relay output bus`.
-- **BSZ naming conflict:** `BSZ-205..212` are described as "Blower Pressure Switch" but appear in DO block.
-  - This strongly suggests they are actually blower actuator outputs and the label should be corrected.
+- **BSZ naming conflict mostly resolved by email:** Sterling's 2026-05-13 reply confirms `BSZ-205..212` are blower output relay coils, not feedback inputs. Final terminal naming is still pending in the hardware pin map.
 - Missing explicit signal details:
-  - DI polarity (NO/NC), active level, and debounce defaults.
+  - Final DI polarity/active-level table. Sterling's email says floats are normally open and closed means asserted, but the signed terminal map is still pending.
   - Pump/blower relay command convention (energize to run vs. de-energize fail-safe).
   - Analog scaling details (range, units, filtering).
   - Flow pulse K-factor constants per channel.
@@ -278,11 +281,15 @@ Use these as baseline behaviors unless superseded by signed-off pinout + safety 
 - Final hardware pinout confirmation and relay polarity still pending.
 - No signed-off float/air-switch truth table exists in current docs.
 - Flow pulse scaling and pressure transducer unit details not yet defined.
+- High-level behaviour has conflicting email answers from 2026-05-13 and 2026-05-19.
+- Reboot/AUTO-resume behaviour has conflicting email answers from 2026-05-13 and 2026-05-19.
+- A corrected plan sheet is still pending to resolve the 2,000 gallon tank labelling issue cleanly.
 
 ### Open questions
 
 - Is there a dedicated holding/distribution tank before disposal?
 - Confirm ESP32 slot 0/2 semantics relative to SOW non-negotiable constraints.
+- Confirm high-level behaviour: fail-safe stop/latch vs emergency pump-down.
 - Confirm BO logic for high-level and maintenance priority in simultaneous fault scenarios.
 - Provide full controller/firmware revision and revision-specific calibration constants.
 
@@ -316,6 +323,8 @@ Reference set used for this context file:
 - `memory/sterling-septic-job/docs/pinout-diagram-v1-review.md`
 - `memory/sterling-septic-job/docs/sow-summary-2026-01-30.md`
 - `memory/sterling-septic-job/raw/pinout-sterling-v1.csv`
+- Gmail thread `19e23652816a50f5`, `Re: Hidden Arbor RV Park OSSF`, 2026-05-13.
+- Gmail thread `19d2a9beec35f79d`, `Re: Hidden Arbor RV Park OSSF`, 2026-03-26 to 2026-05-19.
 
 ## 12) Checklist
 
@@ -327,13 +336,15 @@ Reference set used for this context file:
 - [x] Added full DI/DO/AI map from attached CSV with slot/channel/board/address.
 - [x] Added ambiguities, assumptions, gaps, and open questions explicitly.
 - [x] Added visual references and copied plan screenshots into repo docs path.
+- [x] Added latest Gmail-derived Sterling engineering memory and conflict notes.
 
 ### Still unknown / needs follow-up
 
-- [ ] Confirm corrected pin naming/typing for BSZ channels and pressure switch locations.
+- [ ] Receive final terminal/pin map, including corrected names for BSZ outputs and matching pressure-switch inputs.
 - [ ] Confirm slot 0/2 direct-ESP32 semantics against non-negotiable SOW constraints.
 - [ ] Confirm terminal holding/distribution stage and exact disposal confirmation behavior.
 - [ ] Confirm signal polarity, calibration constants, and alarm thresholds.
+- [ ] Resolve conflicting high-level and reboot/AUTO-resume answers from Sterling's 2026-05-13 and 2026-05-19 emails.
 
 ## 13) MacBook plan folder check
 

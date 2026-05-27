@@ -17,6 +17,7 @@ dist-ssr
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
+!.vscode/settings.json
 .idea
 .DS_Store
 *.suo
@@ -27,3 +28,4 @@ dist-ssr
 apps/firmware/.pio
 apps/firmware/.pio-core
 apps/firmware/.vscode
+apps/firmware/compile_commands.json

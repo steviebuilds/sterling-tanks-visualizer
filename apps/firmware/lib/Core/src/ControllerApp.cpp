@@ -4,10 +4,11 @@ namespace septic::core
 {
 
 	ControllerApp::ControllerApp(ControllerConfig config, IClock &clock, ITelemetrySink &telemetry_sink)
-		: config_(config),
+		: config_(normalizedControllerConfig(config)),
 		  clock_(clock),
 		  telemetry_sink_(telemetry_sink),
-		  recovery_manager_(config.start_in_safe_hold) {}
+		  control_loop_(config_),
+		  recovery_manager_(config_.start_in_safe_hold) {}
 
 	void ControllerApp::completeStartupChecks()
 	{

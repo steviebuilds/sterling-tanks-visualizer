@@ -45,8 +45,8 @@ Root scripts currently target the visualiser workspace:
 
 The firmware app lives at `apps/firmware` and is intentionally structured around testability:
 
-- pure C++ control core in `lib/SepticCore`
-- ESP32/Arduino integration in `lib/SepticHal` and `src/main.cpp`
+- pure C++ control core in `lib/Core`
+- ESP32/Arduino integration in `lib/ESP32Layer` and `src/main.cpp`
 - native host tests in `apps/firmware/test`
 - architecture and implementation notes in `apps/firmware/docs`
 

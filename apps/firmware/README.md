@@ -19,14 +19,15 @@ This is intentionally a clean starting point, not a finished implementation. The
 apps/firmware/
   docs/
     ARCHITECTURE.md
+    CONTROLLER_RULES.md
     IMPLEMENTATION_PLAN.md
   include/
     README.md
   lib/
-    SepticCore/
+    Core/
       include/septic/core/
       src/
-    SepticHal/
+    ESP32Layer/
       include/septic/hal/
       src/
   src/
@@ -40,12 +41,28 @@ apps/firmware/
 
 ```bash
 cd apps/firmware
+pio run
+pio run -t upload
+```
+
+The default PlatformIO environment is `esp32dev`, so a non-technical user can build or upload without selecting a profile.
+
+For development checks:
+
+```bash
+cd apps/firmware
+pio run -t compiledb
 pio test -e native
 pio run -e esp32dev
 ```
 
+Run `pio run -t compiledb` after changing PlatformIO environments if VS Code shows stale C++ include errors.
+
 ## Current status
 
-- The control core is placeholder-only and intentionally conservative.
-- The native tests prove the scaffold shape, not the final Sterling logic.
-- Real sequencing, timers, truth tables, and telemetry payloads should be filled in only after the open system questions are answered.
+- The control core implements the current Sterling rules in hardware-agnostic C++.
+- `SimulationHarness` runs the real controller with fake time and inputs for tests and WASM.
+- Native tests cover the main control scenarios before hardware exists.
+- ESP32 builds compile and run through the site profile / HAL IO adapter.
+- Client-editable pins and telemetry placeholders live in `lib/ESP32Layer/include/septic/hal/SiteConstants.h`.
+- Persistence, transport, and final HAND-mode behavior are still open.

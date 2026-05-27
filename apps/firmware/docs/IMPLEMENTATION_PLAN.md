@@ -5,40 +5,37 @@
 - PlatformIO project scaffold
 - native test target
 - ESP32 target
-- placeholder control application
-- placeholder recovery manager
-- placeholder telemetry port
+- hardware-agnostic control core
+- startup safe-hold policy
+- telemetry port
+- scenario tests for the current Sterling rules
 
 ## What happens next
 
-### Phase 1: lock system understanding
+### Phase 1: close remaining system gaps
 
-- confirm tank sequence and passive vs active stages
-- confirm float truth table
-- confirm blower proof and command model
-- confirm timeout values
-- confirm zoning behaviour
-- confirm API payload contract
+- receive corrected plan sheet
+- receive hardware pin map
+- confirm whether pump-call float is a distinct input
+- confirm HAND-mode safety rules
+- confirm API payload contract and transport
 
-### Phase 2: define configuration model
+### Phase 2: hardware adapters
 
-- hardware profile
-- IO mapping
-- timer values
-- alarm thresholds
-- site-specific enable/disable flags
+- fill hardware profile from pin map
+- replace direct ESP32 pins with expander drivers if the panel uses IO modules
+- persistent storage for timers, active zones, lead alternation, and latches
 
-### Phase 3: build core engine
+### Phase 3: simulation harness
 
-- input snapshot model
-- control state machine
-- alarm manager
-- recovery policies
-- telemetry/event model
+- replay scenario files
+- generate dashboard snapshots from simulated ticks
+- test long-run timing and zone rotation
+- test reset and power-cycle cases
 
 ### Phase 4: adapters
 
-- ESP32 time and logging
+- ESP32 time and logging refinements
 - MCP23017 input/output access
 - ADS1115 analog reads
 - Ethernet / API publisher

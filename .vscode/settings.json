@@ -1,0 +1,19 @@
+{
+  "C_Cpp.default.compileCommands": "${workspaceFolder}/apps/firmware/compile_commands.json",
+  "C_Cpp.default.configurationProvider": "platformio.platformio-ide",
+  "C_Cpp.default.defines": [
+    "ARDUINO=10805",
+    "ARDUINO_ARCH_ESP32",
+    "ESP32",
+    "SEPTIC_TARGET_ESP32"
+  ],
+  "C_Cpp.default.includePath": [
+    "${workspaceFolder}/apps/firmware/include",
+    "${workspaceFolder}/apps/firmware/src",
+    "${workspaceFolder}/apps/firmware/lib/Core/include",
+    "${workspaceFolder}/apps/firmware/lib/ESP32Layer/include",
+    "${userHome}/.platformio/packages/framework-arduinoespressif32/cores/esp32",
+    "${userHome}/.platformio/packages/framework-arduinoespressif32/variants/esp32"
+  ],
+  "C_Cpp.default.cppStandard": "c++17"
+}

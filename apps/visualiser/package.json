@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "build:core-wasm": "node scripts/build-core-wasm.mjs",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"

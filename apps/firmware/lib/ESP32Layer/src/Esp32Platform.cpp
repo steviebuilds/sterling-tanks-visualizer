@@ -28,7 +28,7 @@ namespace septic::hal
 		Serial.print(" cycle=");
 		Serial.print(state.cycle_count);
 		Serial.print(" high_level_fault=");
-		Serial.println(state.faults.high_level ? 1 : 0);
+		Serial.println(state.faults.high_water[0] || state.faults.high_water[1] ? 1 : 0);
 #else
 		(void)state;
 #endif
