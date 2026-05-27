@@ -117,7 +117,7 @@ h1 {
 	display: grid;
 	grid-template-columns: minmax(230px, 270px) minmax(720px, 1fr) minmax(260px, 330px);
 	gap: 1rem;
-	align-items: stretch;
+	align-items: start;
 }
 
 .simulator-stack {
@@ -144,6 +144,17 @@ h1 {
 
 .control-panel {
 	align-self: start;
+}
+
+.status-panel,
+.plant-view {
+	align-self: start;
+	width: 100%;
+}
+
+.status-panel {
+	min-height: 650px;
+	max-height: 650px;
 }
 
 .panel-section {
@@ -353,6 +364,7 @@ h1 {
 	min-height: 650px;
 	padding: clamp(0.9rem, 2.2vw, 1.3rem);
 	display: grid;
+	align-content: start;
 	overflow: hidden;
 	background:
 		linear-gradient(90deg, rgb(205 216 210 / 42%) 1px, transparent 1px),
@@ -1498,6 +1510,8 @@ h1 {
 		grid-column: 1 / -1;
 		display: grid;
 		grid-template-columns: 1fr 1fr 1.2fr;
+		min-height: auto;
+		max-height: none;
 	}
 }
 
